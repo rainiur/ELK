@@ -1,0 +1,49 @@
+#########################################################
+#  Elastic Agent Ubuntu Install Steps
+#		by David Walden (Rainiur)
+#  These steps will: 
+#  Add the Elastic Repository to apt
+#  Download and install the elastic agent
+#  Download the certificate from the server via scp
+#       (This script will register a self-signed cert if you are using a 3rd party signed cert delete --insecure from the elastic-agent install)
+#  Add the certificate
+#  And run the install to register it to your Fleet manager
+#
+#  You will need the following
+#		- ssh credentials, filename and IP for the server with your cert 
+#			(best to copy the cert to the root directory of the user)
+#		- IP address of your Fleet Server
+#		- Token for the policy to apply to the system
+#
+#########################################################
+
+## Download and install the GPG Key for the Elastic Repository
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
+## Add apt-transport-https to enable https downloads for apt
+sudo apt-get install apt-transport-https -y
+
+## Add Elastic repository to the apt sources.list file
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+
+## Update the repositories
+sudo apt-get update -y
+
+## Install the elastic agent
+sudo apt-get install elastic-agent -y
+
+## Download the cert and add the the shared certs directory
+sudo scp <username>@<Server IP>:<filename i.e. ca.crt> .
+sudo mv ca.crt /usr/local/share/ca-certificates/
+# OR #
+sudo scp <username>@<Server IP>:ca.crt /usr/local/share/ca-certificates/
+
+## Add the cert
+sudo update-ca-certificates
+
+## Since the agent was installed via apt we just need to enroll with the Fleet Server
+sudo elastic-agent enroll -f --url=https://<Fleet Server IP>:8220 --insecure --enrollment-token=<Policy Token>
+
+## Restart and enable the service
+sudo systemctl start elastic-agent.service
+sudo systemctl enable elastic-agent.service
