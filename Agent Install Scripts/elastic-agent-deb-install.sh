@@ -21,6 +21,7 @@
 username='<ssh username>'
 certIP='<IP to cert server>'
 fleetIP='<IP of Fleet Server>'
+token='<token from Fleet Manager>'
 
 ## Download the cert and add the the shared certs directory
 # scp <username>@<Server IP>:<filename i.e. ca.crt> .
@@ -36,7 +37,7 @@ curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-ag
 dpkg -i elastic-agent-7.14.1-amd64.deb
 
 ## Since the agent was installed via apt we just need to enroll with the Fleet Server
-elastic-agent enroll -f --url=https://$fleetIP:8220 --insecure --enrollment-token=<Policy Token>
+elastic-agent enroll -f --url=https://$fleetIP:8220 --insecure --enrollment-token=$token
 
 ## Restart and enable the service
 systemctl start elastic-agent.service
