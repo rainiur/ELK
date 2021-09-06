@@ -6,7 +6,7 @@ echo 'Disabling agent'
 systemctl disable elastic-agent
 
 echo 'Purging Agent'
-apt purge elastic-agent -y
+dpkg -P elastic-agent
 
 echo 'Removing directories'
 rm -rf /var/lib/elastic-agent
