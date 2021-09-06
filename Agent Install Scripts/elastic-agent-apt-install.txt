@@ -1,5 +1,5 @@
 #########################################################
-#  Elastic Agent Ubuntu Install Steps
+#  Elastic Agent Ubuntu Install Steps using apt
 #		by David Walden (Rainiur)
 #  These steps will: 
 #  Add the Elastic Repository to apt
