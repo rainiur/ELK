@@ -1,3 +1,4 @@
+#!/bin/bash
 #########################################################
 #  Elastic Agent Ubuntu Install Steps using apt
 #		by David Walden (Rainiur)
@@ -17,9 +18,9 @@
 #
 #########################################################
 
-username = <ssh username>
-certIP = <IP to cert server>
-fleetIP = <IP of Fleet Server>
+username='<ssh username>'
+certIP='<IP to cert server>'
+fleetIP='<IP of Fleet Server>'
 
 ## Download the cert and add the the shared certs directory
 # scp <username>@<Server IP>:<filename i.e. ca.crt> .
