@@ -38,7 +38,7 @@ tar xzvf elastic-agent-7.14.1-linux-x86_64.tar.gz
 
 ## Since the agent was installed via apt we just need to enroll with the Fleet Server
 cd elastic-agent-7.14.1-linux-x86_64
-elastic-agent install -f --url=https://$fleetIP:8220 --insecure --enrollment-token=$token
+./elastic-agent install -f --url=https://$fleetIP:8220 --insecure --enrollment-token=$token
 
 ## Restart and enable the service
 systemctl start elastic-agent.service
